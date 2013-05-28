@@ -43,7 +43,15 @@
                 {% trans "Comments" %}
             {% endspaceless %}</a>)
         {% else %}(<a href="#comments">{% spaceless %}
-            {% blocktrans count blog_post.comments_count as comments_count %}1 comment{% plural %}{{ comments_count }} comments{% endblocktrans %}
+            {% with comments_count=blog_post.comments_count %}
+                {% if comments_count == 0 %}
+                    {% trans "0 comments" %}
+                {% elif comments_count == 1 %}
+                    {% trans "1 comment" %}
+                {% else %}
+                    {{ comments_count }} {% trans "comments" %}
+                {% endif %}
+            {% endwith %}
             {% endspaceless %}</a>)
         {% endif %}
     {% endif %}
